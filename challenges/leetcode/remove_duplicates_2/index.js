@@ -3,43 +3,34 @@
  * @return {number}
  */
 var removeDuplicates = function (nums) {
-  let scanner = 0;
-  let uniqes = 0;
-  let cDindex = null;
-  let currentPointer = nums[0];
-  let currentCounter = 1;
-  console.log({ input: nums });
+  const map = new Map();
 
-  while (scanner < nums.length) {
-    if (nums[scanner] === nums[scanner + 1]) {
-      if (currentPointer === nums[scanner]) {
-        currentCounter++;
-      }
-      if (!cDindex) {
-        if (nums[scanner + 1] !== nums[scanner + 2]) {
-          if (currentCounter > 2) {
-            cDindex = scanner + 1;
-          }
-        }
-      }
+  for (let i = 0; i <= nums.length - 1; i++) {
+    if (!map.get(nums[i])) {
+      map.set(nums[i], 1);
     } else {
-      if (cDindex && nums[scanner + 1] != undefined) {
-        nums[cDindex] = nums[scanner + 1];
-        if (nums[scanner + 1] !== nums[scanner + 2]) {
-          cDindex++;
-        } else {
-          cDindex = scanner + 2;
-        }
+      if (map.get(nums[i]) < 2) {
+        map[nums[i]] = map.set(nums[i], map.get(nums[i]) + 1);
       }
     }
-    scanner++;
   }
 
-  console.log({ nums, uniqes, cDindex, scanner });
+  const newNums = Array.from(map).reduce((a, c) => {
+    const [number, repeatable] = c;
+    for (let i = 0; i < repeatable; i++) {
+      a.push(number);
+    }
+    return a;
+  }, []);
 
-  return cDindex ? cDindex : 1;
+  for (let i = 0; i <= newNums.length - 1; i++) {
+    nums[i] = newNums[i];
+  }
+  return newNums.length;
 };
+
 const a = [1, 1, 1, 2, 2, 3];
 const b = [0, 0, 1, 1, 1, 1, 2, 3, 3];
 const c = [0, 0, 1, 1, 1, 2, 2, 3, 3, 4];
-removeDuplicates(b);
+const d = [0, 1, 1, 1, 2, 2];
+removeDuplicates([1, 1, 1, 2, 2, 3]);
