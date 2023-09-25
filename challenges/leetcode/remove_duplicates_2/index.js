@@ -34,3 +34,22 @@ const b = [0, 0, 1, 1, 1, 1, 2, 3, 3];
 const c = [0, 0, 1, 1, 1, 2, 2, 3, 3, 4];
 const d = [0, 1, 1, 1, 2, 2];
 removeDuplicates([1, 1, 1, 2, 2, 3]);
+
+/**
+ * Effective and efficient
+ * 
+ * var removeDuplicates = function (nums) {
+    // idx store the index of array till we have element duplicates maximum twice
+    let idx = 2;
+    // start iterating from index 2 because first two element can't be duplicate more than twice
+    for (let i = 2; i < nums.length; i++) {
+        // over write element if they are present more than twice
+        if (nums[i] != nums[idx - 2]) {
+            nums[idx] = nums[i];
+            idx += 1;
+        }
+    }
+    // return idx
+    return idx;
+};
+ */
